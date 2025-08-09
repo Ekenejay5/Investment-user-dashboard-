@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Plans</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#001f3f',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+        }
+        .modal {
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            transition: all 0.3s ease;
+            transform: translateY(-20px);
+        }
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="sidebar bg-primary text-white w-64 fixed h-full z-10">
+            <div class="p-4 border-b border-blue-800">
+                <h1 class="text-xl font-bold">Company</h1>
+            </div>
+            <nav class="mt-4">
+                <a href="dashboard.html" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="plans.html" class="flex items-center py-3 px-6 bg-blue-900 text-white">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                    Plans
+                </a>
+                <a href="deposit.html" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Deposit
+                </a>
+                <a href="withdrawal.html" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                    </svg>
+                    Withdraw
+                </a>
+                <a href="#" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                    </svg>
+                    History
+                </a>
+                <a href="#" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                    </svg>
+                    Referrals
+                </a>
+                <a href="#" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    Settings
+                </a>
+                <a href="#" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                    </svg>
+                    Notifications
+                </a>
+                <a href="#" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    Support
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 overflow-auto ml-0 md:ml-64">
+            <!-- Mobile Header -->
+            <div class="md:hidden bg-primary text-white p-4 flex items-center justify-between">
+                <button id="sidebarToggle" class="text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                <h1 class="text-xl font-bold">Choose an Investment Plan</h1>
+                <div class="w-6"></div> <!-- Spacer for alignment -->
+            </div>
+
+            <!-- Desktop Header -->
+            <header class="bg-white shadow-sm p-4 hidden md:block">
+                <h1 class="text-2xl font-bold text-gray-800">Choose an Investment Plan</h1>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="p-4">
+                <!-- Investment Plans Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Starter Plan -->
+                    <div class="bg-white rounded-lg shadow overflow-hidden transition-transform hover:scale-[1.02]">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start">
+                                <h3 class="text-xl font-bold text-gray-800">Starter Plan</h3>
+                                <span class="bg-blue-100 text-primary text-xs font-semibold px-2.5 py-0.5 rounded">Popular</span>
+                            </div>
+                            <div class="mt-4">
+                                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                                    <span class="text-gray-600">Minimum Investment:</span>
+                                    <span class="font-medium">$100</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                                    <span class="text-gray-600">Maximum Investment:</span>
+                                    <span class="font-medium">$1,000</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                                    <span class="text-gray-600">Daily Return:</span>
+                                    <span class="font-medium text-green-600">5%</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2">
+                                    <span class="text-gray-600">Duration:</span>
+                                    <span class="font-medium">30 days</span>
+                                </div>
+                            </div>
+                            <button 
+                                class="invest-btn mt-6 w-full bg-primary text-white py-2 rounded-lg hover:bg-blue-800 transition duration-200 font-medium"
+                                data-plan="Starter Plan"
+                                data-min="100"
+                                data-max="1000"
+                            >
+                                Invest Now
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Pro Plan -->
+                    <div class="bg-white rounded-lg shadow overflow-hidden transition-transform hover:scale-[1.02]">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800">Pro Plan</h3>
+                            <div class="mt-4">
+                                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                                    <span class="text-gray-600">Minimum Investment:</span>
+                                    <span class="font-medium">$1,000</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                                    <span class="text-gray-600">Maximum Investment:</span>
+                                    <span class="font-medium">$5,000</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                                    <span class="text-gray-600">Daily Return:</span>
+                                    <span class="font-medium text-green-600">7%</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2">
+                                    <span class="text-gray-600">Duration:</span>
+                                    <span class="font-medium">30 days</span>
+                                </div>
+                            </div>
+                            <button 
+                                class="invest-btn mt-6 w-full bg-primary text-white py-2 rounded-lg hover:bg-blue-800 transition duration-200 font-medium"
+                                data-plan="Pro Plan"
+                                data-min="1000"
+                                data-max="5000"
+                            >
+                                Invest Now
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Premium Plan -->
+                    <div class="bg-white rounded-lg shadow overflow-hidden transition-transform hover:scale-[1.02]">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800">Premium Plan</h3>
+                            <div class="mt-4">
+                                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                                    <span class="text-gray-600">Minimum Investment:</span>
+                                    <span class="font-medium">$5,000</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                                    <span class="text-gray-600">Maximum Investment:</span>
+                                    <span class="font-medium">$20,000</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                                    <span class="text-gray-600">Daily Return:</span>
+                                    <span class="font-medium text-green-600">10%</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2">
+                                    <span class="text-gray-600">Duration:</span>
+                                    <span class="font-medium">30 days</span>
+                                </div>
+                            </div>
+                            <button 
+                                class="invest-btn mt-6 w-full bg-primary text-white py-2 rounded-lg hover:bg-blue-800 transition duration-200 font-medium"
+                                data-plan="Premium Plan"
+                                data-min="5000"
+                                data-max="20000"
+                            >
+                                Invest Now
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- VIP Plan -->
+                    <div class="bg-white rounded-lg shadow overflow-hidden transition-transform hover:scale-[1.02]">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800">VIP Plan</h3>
+                            <div class="mt-4">
+                                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                                    <span class="text-gray-600">Minimum Investment:</span>
+                                    <span class="font-medium">$20,000</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                                    <span class="text-gray-600">Maximum Investment:</span>
+                                    <span class="font-medium">$100,000</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                                    <span class="text-gray-600">Daily Return:</span>
+                                    <span class="font-medium text-green-600">15%</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2">
+                                    <span class="text-gray-600">Duration:</span>
+                                    <span class="font-medium">30 days</span>
+                                </div>
+                            </div>
+                            <button 
+                                class="invest-btn mt-6 w-full bg-primary text-white py-2 rounded-lg hover:bg-blue-800 transition duration-200 font-medium"
+                                data-plan="VIP Plan"
+                                data-min="20000"
+                                data-max="100000"
+                            >
+                                Invest Now
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Long-Term Plan -->
+                    <div class="bg-white rounded-lg shadow overflow-hidden transition-transform hover:scale-[1.02]">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800">Long-Term Plan</h3>
+                            <div class="mt-4">
+                                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                                    <span class="text-gray-600">Minimum Investment:</span>
+                                    <span class="font-medium">$500</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                                    <span class="text-gray-600">Maximum Investment:</span>
+                                    <span class="font-medium">$50,000</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                                    <span class="text-gray-600">Daily Return:</span>
+                                    <span class="font-medium text-green-600">3%</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2">
+                                    <span class="text-gray-600">Duration:</span>
+                                    <span class="font-medium">90 days</span>
+                                </div>
+                            </div>
+                            <button 
+                                class="invest-btn mt-6 w-full bg-primary text-white py-2 rounded-lg hover:bg-blue-800 transition duration-200 font-medium"
+                                data-plan="Long-Term Plan"
+                                data-min="500"
+                                data-max="50000"
+                            >
+                                Invest Now
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- High Yield Plan -->
+                    <div class="bg-white rounded-lg shadow overflow-hidden transition-transform hover:scale-[1.02]">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800">High Yield Plan</h3>
+                            <div class="mt-4">
+                                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                                    <span class="text-gray-600">Minimum Investment:</span>
+                                    <span class="font-medium">$10,000</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                                    <span class="text-gray-600">Maximum Investment:</span>
+                                    <span class="font-medium">No limit</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                                    <span class="text-gray-600">Daily Return:</span>
+                                    <span class="font-medium text-green-600">20%</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2">
+                                    <span class="text-gray-600">Duration:</span>
+                                    <span class="font-medium">15 days</span>
+                                </div>
+                            </div>
+                            <button 
+                                class="invest-btn mt-6 w-full bg-primary text-white py-2 rounded-lg hover:bg-blue-800 transition duration-200 font-medium"
+                                data-plan="High Yield Plan"
+                                data-min="10000"
+                                data-max="0"
+                            >
+                                Invest Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Investment Modal -->
+    <div id="investmentModal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none">
+        <div class="modal-content bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-800" id="modalPlanName">Invest in Plan</h3>
+                <button id="closeModal" class="text-gray-400 hover:text-gray-500">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <form id="investmentForm">
+                <div class="mb-4">
+                    <label for="investmentAmount" class="block text-primary font-medium mb-2">Investment Amount (USD)</label>
+                    <input 
+                        type="number" 
+                        id="investmentAmount" 
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"
+                        required
+                    >
+                    <p class="text-sm text-gray-500 mt-1" id="amountRange">Minimum: $100, Maximum: $1,000</p>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="paymentMethod" class="block text-primary font-medium mb-2">Payment Method</label>
+                    <select 
+                        id="paymentMethod" 
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"
+                        required
+                    >
+                        <option value="" disabled selected>Select payment method</option>
+                        <option value="BTC">Bitcoin (BTC)</option>
+                        <option value="ETH">Ethereum (ETH)</option>
+                        <option value="USDT">USDT (TRC20/ERC20)</option>
+                        <option value="LTC">Litecoin (LTC)</option>
+                    </select>
+                </div>
+                
+                <button 
+                    type="submit" 
+                    class="w-full bg-primary text-white py-2 rounded-lg hover:bg-blue-800 transition duration-200 font-medium"
+                >
+                    Confirm Investment
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Mobile sidebar toggle
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('open');
+        });
+
+        // Investment modal functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('investmentModal');
+            const closeModal = document.getElementById('closeModal');
+            const investBtns = document.querySelectorAll('.invest-btn');
+            const modalPlanName = document.getElementById('modalPlanName');
+            const amountRange = document.getElementById('amountRange');
+            const investmentForm = document.getElementById('investmentForm');
+            const investmentAmount = document.getElementById('investmentAmount');
+            let currentMin = 0;
+            let currentMax = 0;
+
+            // Open modal when Invest Now button is clicked
+            investBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const planName = this.getAttribute('data-plan');
+                    currentMin = parseFloat(this.getAttribute('data-min'));
+                    currentMax = parseFloat(this.getAttribute('data-max'));
+                    
+                    modalPlanName.textContent = `Invest in ${planName}`;
+                    
+                    if (currentMax === 0) {
+                        amountRange.textContent = `Minimum: $${currentMin.toLocaleString()}, No maximum limit`;
+                    } else {
+                        amountRange.textContent = `Minimum: $${currentMin.toLocaleString()}, Maximum: $${currentMax.toLocaleString()}`;
+                    }
+                    
+                    modal.classList.add('active');
+                });
+            });
+
+            // Close modal
+            closeModal.addEventListener('click', function() {
+                modal.classList.remove('active');
+            });
+
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+
+            // Form submission
+            investmentForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const amount = parseFloat(investmentAmount.value);
+                const method = document.getElementById('paymentMethod').value;
+                
+                if (isNaN(amount)) {
+                    alert('Please enter a valid amount');
+                    return;
+                }
+                
+                if (amount < currentMin) {
+                    alert(`Amount must be at least $${currentMin}`);
+                    return;
+                }
+                
+                if (currentMax > 0 && amount > currentMax) {
+                    alert(`Amount cannot exceed $${currentMax}`);
+                    return;
+                }
+                
+                // Here you would typically send the data to your server
+                alert(`Investment submitted:\nPlan: ${modalPlanName.textContent}\nAmount: $${amount.toFixed(2)}\nMethod: ${method}`);
+                
+                // Reset form and close modal
+                this.reset();
+                modal.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

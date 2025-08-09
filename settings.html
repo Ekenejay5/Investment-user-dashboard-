@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#001f3f',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="sidebar bg-primary text-white w-64 fixed h-full z-10">
+            <div class="p-4 border-b border-blue-800">
+                <h1 class="text-xl font-bold">Company</h1>
+            </div>
+            <nav class="mt-4">
+                <a href="dashboard.html" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="plans.html" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                    Plans
+                </a>
+                <a href="deposit.html" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Deposit
+                </a>
+                <a href="withdrawal.html" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                    </svg>
+                    Withdraw
+                </a>
+                <a href="#" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                    </svg>
+                    History
+                </a>
+                <a href="#" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                    </svg>
+                    Referrals
+                </a>
+                <a href="settings.html" class="flex items-center py-3 px-6 bg-blue-900 text-white">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    Settings
+                </a>
+                <a href="#" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                    </svg>
+                    Notifications
+                </a>
+                <a href="#" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    Support
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 overflow-auto ml-0 md:ml-64">
+            <!-- Mobile Header -->
+            <div class="md:hidden bg-primary text-white p-4 flex items-center justify-between">
+                <button id="sidebarToggle" class="text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                <h1 class="text-xl font-bold">Account Settings</h1>
+                <div class="w-6"></div> <!-- Spacer for alignment -->
+            </div>
+
+            <!-- Desktop Header -->
+            <header class="bg-white shadow-sm p-4 hidden md:block">
+                <h1 class="text-2xl font-bold text-gray-800">Account Settings</h1>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="p-4 space-y-6">
+                <!-- Profile Information Card -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">Profile Information</h2>
+                    <form id="profileForm" class="space-y-4">
+                        <div>
+                            <label for="fullName" class="block text-primary font-medium mb-2">Full Name</label>
+                            <input 
+                                type="text" 
+                                id="fullName" 
+                                value="John Doe" 
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"
+                                required
+                            >
+                        </div>
+                        <div>
+                            <label for="email" class="block text-primary font-medium mb-2">Email</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                value="john.doe@example.com" 
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed"
+                                readonly
+                            >
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-primary font-medium mb-2">Phone Number</label>
+                            <input 
+                                type="tel" 
+                                id="phone" 
+                                value="+1 (555) 123-4567" 
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"
+                            >
+                        </div>
+                        <div class="pt-2">
+                            <button 
+                                type="submit" 
+                                class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-blue-800 transition duration-200 font-medium"
+                            >
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Password Change Card -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">Password Change</h2>
+                    <form id="passwordForm" class="space-y-4">
+                        <div>
+                            <label for="currentPassword" class="block text-primary font-medium mb-2">Current Password</label>
+                            <input 
+                                type="password" 
+                                id="currentPassword" 
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"
+                                required
+                            >
+                        </div>
+                        <div>
+                            <label for="newPassword" class="block text-primary font-medium mb-2">New Password</label>
+                            <input 
+                                type="password" 
+                                id="newPassword" 
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"
+                                required
+                            >
+                        </div>
+                        <div>
+                            <label for="confirmPassword" class="block text-primary font-medium mb-2">Confirm New Password</label>
+                            <input 
+                                type="password" 
+                                id="confirmPassword" 
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"
+                                required
+                            >
+                        </div>
+                        <div class="pt-2">
+                            <button 
+                                type="submit" 
+                                class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-blue-800 transition duration-200 font-medium"
+                            >
+                                Update Password
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Wallet Addresses Card -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">Wallet Addresses</h2>
+                    <form id="walletsForm" class="space-y-4">
+                        <div>
+                            <label for="btcWallet" class="block text-primary font-medium mb-2">Bitcoin (BTC) Address</label>
+                            <input 
+                                type="text" 
+                                id="btcWallet" 
+                                value="3FZbgi29cpjq2GjdwV8eyHuJJnkLtktZc5" 
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"
+                            >
+                        </div>
+                        <div>
+                            <label for="ethWallet" class="block text-primary font-medium mb-2">Ethereum (ETH) Address</label>
+                            <input 
+                                type="text" 
+                                id="ethWallet" 
+                                value="0x71C7656EC7ab88b098defB751B7401B5f6d8976F" 
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"
+                            >
+                        </div>
+                        <div>
+                            <label for="usdtWallet" class="block text-primary font-medium mb-2">USDT (TRC20/ERC20) Address</label>
+                            <input 
+                                type="text" 
+                                id="usdtWallet" 
+                                value="0x71C7656EC7ab88b098defB751B7401B5f6d8976F" 
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"
+                            >
+                        </div>
+                        <div>
+                            <label for="bankDetails" class="block text-primary font-medium mb-2">Bank Account Details</label>
+                            <textarea 
+                                id="bankDetails" 
+                                rows="3" 
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"
+                            >Bank Name: Chase
+Account Name: John Doe
+Account Number: 1234567890
+Routing Number: 021000021</textarea>
+                        </div>
+                        <div class="pt-2">
+                            <button 
+                                type="submit" 
+                                class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-blue-800 transition duration-200 font-medium"
+                            >
+                                Save Wallets
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Mobile sidebar toggle
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('open');
+        });
+
+        // Initialize all select dropdowns
+        function initializeDropdowns() {
+            // This ensures all select elements are properly initialized
+            document.querySelectorAll('select').forEach(select => {
+                select.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            });
+        }
+
+        // Form submissions
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeDropdowns();
+            
+            const profileForm = document.getElementById('profileForm');
+            const passwordForm = document.getElementById('passwordForm');
+            const walletsForm = document.getElementById('walletsForm');
+
+            // Profile form submission
+            profileForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Profile information updated successfully!');
+            });
+
+            // Password form submission
+            passwordForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                if (newPassword !== confirmPassword) {
+                    alert('New passwords do not match!');
+                    return;
+                }
+                
+                if (newPassword.length < 8) {
+                    alert('Password must be at least 8 characters long');
+                    return;
+                }
+                
+                alert('Password updated successfully!');
+                this.reset();
+            });
+
+            // Wallets form submission
+            walletsForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Wallet addresses updated successfully!');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction History</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#001f3f',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="sidebar bg-primary text-white w-64 fixed h-full z-10">
+            <div class="p-4 border-b border-blue-800">
+                <h1 class="text-xl font-bold">Company</h1>
+            </div>
+            <nav class="mt-4">
+                <a href="dashboard.html" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="plans.html" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                    Plans
+                </a>
+                <a href="deposit.html" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Deposit
+                </a>
+                <a href="withdrawal.html" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                    </svg>
+                    Withdraw
+                </a>
+                <a href="history.html" class="flex items-center py-3 px-6 bg-blue-900 text-white">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                    </svg>
+                    History
+                </a>
+                <a href="#" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                    </svg>
+                    Referrals
+                </a>
+                <a href="settings.html" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    Settings
+                </a>
+                <a href="#" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                    </svg>
+                    Notifications
+                </a>
+                <a href="#" class="flex items-center py-3 px-6 hover:bg-blue-800 transition duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    Support
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 overflow-auto ml-0 md:ml-64">
+            <!-- Mobile Header -->
+            <div class="md:hidden bg-primary text-white p-4 flex items-center justify-between">
+                <button id="sidebarToggle" class="text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                <h1 class="text-xl font-bold">Transaction History</h1>
+                <div class="w-6"></div> <!-- Spacer for alignment -->
+            </div>
+
+            <!-- Desktop Header -->
+            <header class="bg-white shadow-sm p-4 hidden md:block">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-2xl font-bold text-gray-800">Transaction History</h1>
+                    <div class="relative">
+                        <select id="transactionFilter" class="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-2 pr-8 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition">
+                            <option value="all">All Transactions</option>
+                            <option value="deposit">Deposits</option>
+                            <option value="withdrawal">Withdrawals</option>
+                            <option value="investment">Investments</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="p-4">
+                <!-- Mobile Filter -->
+                <div class="mb-4 md:hidden">
+                    <div class="relative">
+                        <select id="mobileTransactionFilter" class="appearance-none w-full bg-white border border-gray-300 rounded-lg px-4 py-2 pr-8 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition">
+                            <option value="all">All Transactions</option>
+                            <option value="deposit">Deposits</option>
+                            <option value="withdrawal">Withdrawals</option>
+                            <option value="investment">Investments</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Desktop Table -->
+                <div class="hidden md:block">
+                    <div class="bg-white rounded-lg shadow overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-primary uppercase tracking-wider">Date</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-primary uppercase tracking-wider">Type</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-primary uppercase tracking-wider">Amount</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-primary uppercase tracking-wider">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200" id="desktopTableBody">
+                                    <!-- Transactions will be inserted here by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Cards -->
+                <div class="md:hidden space-y-4" id="mobileTransactions">
+                    <!-- Transaction cards will be inserted here by JavaScript -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Mobile sidebar toggle
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('open');
+        });
+
+        // Transaction data
+        const transactions = [
+            { id: 1, date: '2023-11-15', type: 'deposit', amount: 1000, status: 'completed', description: 'BTC Deposit' },
+            { id: 2, date: '2023-11-14', type: 'investment', amount: 500, status: 'completed', description: 'Starter Plan' },
+            { id: 3, date: '2023-11-13', type: 'withdrawal', amount: 300, status: 'pending', description: 'ETH Withdrawal' },
+            { id: 4, date: '2023-11-12', type: 'deposit', amount: 1500, status: 'completed', description: 'USDT Deposit' },
+            { id: 5, date: '2023-11-11', type: 'investment', amount: 1000, status: 'completed', description: 'Pro Plan' },
+            { id: 6, date: '2023-11-10', type: 'withdrawal', amount: 200, status: 'failed', description: 'Bank Transfer' },
+            { id: 7, date: '2023-11-09', type: 'deposit', amount: 750, status: 'completed', description: 'LTC Deposit' },
+            { id: 8, date: '2023-11-08', type: 'investment', amount: 2000, status: 'completed', description: 'Premium Plan' }
+        ];
+
+        // Function to render transactions based on filter
+        function renderTransactions(filter = 'all') {
+            const filteredTransactions = filter === 'all' 
+                ? transactions 
+                : transactions.filter(tx => tx.type === filter);
+
+            // Render desktop table
+            const desktopTableBody = document.getElementById('desktopTableBody');
+            desktopTableBody.innerHTML = filteredTransactions.map(tx => `
+                <tr class="transaction-row" data-type="${tx.type}">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${tx.date}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        ${tx.type === 'deposit' ? 'Deposit' : tx.type === 'withdrawal' ? 'Withdrawal' : 'Investment'}
+                        ${tx.type === 'deposit' ? 
+                            `<svg class="w-4 h-4 inline ml-1 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>` : 
+                            tx.type === 'withdrawal' ?
+                            `<svg class="w-4 h-4 inline ml-1 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                            </svg>` :
+                            `<svg class="w-4 h-4 inline ml-1 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                            </svg>`
+                        }
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium ${tx.type === 'deposit' ? 'text-green-600' : tx.type === 'withdrawal' ? 'text-red-600' : 'text-blue-600'}">
+                        $${tx.amount.toFixed(2)}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                            ${tx.status === 'completed' ? 'bg-green-100 text-green-800' : 
+                              tx.status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 
+                              'bg-red-100 text-red-800'}">
+                            ${tx.status.charAt(0).toUpperCase() + tx.status.slice(1)}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Render mobile cards
+            const mobileTransactions = document.getElementById('mobileTransactions');
+            mobileTransactions.innerHTML = filteredTransactions.map(tx => `
+                <div class="bg-white rounded-lg shadow p-4 transaction-card" data-type="${tx.type}">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-medium text-gray-900">
+                                ${tx.type === 'deposit' ? 'Deposit' : tx.type === 'withdrawal' ? 'Withdrawal' : 'Investment'}
+                            </h3>
+                            <p class="text-sm text-gray-500">${tx.date}</p>
+                        </div>
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                            ${tx.status === 'completed' ? 'bg-green-100 text-green-800' : 
+                              tx.status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 
+                              'bg-red-100 text-red-800'}">
+                            ${tx.status.charAt(0).toUpperCase() + tx.status.slice(1)}
+                        </span>
+                    </div>
+                    <div class="mt-2">
+                        <p class="text-sm text-gray-600">${tx.description}</p>
+                        <p class="mt-1 text-lg font-semibold ${tx.type === 'deposit' ? 'text-green-600' : tx.type === 'withdrawal' ? 'text-red-600' : 'text-blue-600'}">
+                            $${tx.amount.toFixed(2)}
+                        </p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initial render
+            renderTransactions();
+
+            // Desktop filter change
+            document.getElementById('transactionFilter').addEventListener('change', function() {
+                renderTransactions(this.value);
+            });
+
+            // Mobile filter change
+            document.getElementById('mobileTransactionFilter').addEventListener('change', function() {
+                renderTransactions(this.value);
+            });
+        });
+    </script>
+</body>
+</html>
